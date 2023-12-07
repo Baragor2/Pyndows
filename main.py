@@ -16,7 +16,8 @@ What do you want to do?
             case '1':
                 MyFiles = FileSystem()
             case _:
-                print("Incorrect input ")
+                print("Incorrect input")
+                self.choose_func()
 
 
 class FileSystem:
@@ -25,52 +26,66 @@ class FileSystem:
     def __init__(self):
         print("FileSystem")
         print('Enter "help" for more information')
-        if input() == 'help':
-            self.help_files()
-        else:
-            print("Incorrect input ")
+        self.basic_method()
 
-    @staticmethod
-    def help_files():
+    def basic_method(self):
+        choice = input().split()
+        match(choice[0]):
+            case 'help':
+                self.help_files()
+            case 'create':
+                self.create_file(choice[1])
+            case 'remove':
+                self.remove_file(choice[1])
+            case 'rename':
+                self.rename_file(choice[1])
+            case 'show':
+                self.show_files()
+            case _:
+                print("Incorrect input ")
+                self.basic_method()
+
+    def help_files(self):
         print(
 '''1.To create a file, enter "create <filename>"
 2.To remove a file, enter "remove <filename>"
 3.To rename a file, enter "rename <filename>"
 4.To show a list of files, enter "show files"''')
+        self.basic_method()
 
-    @classmethod
-    def show_files(cls):
+    def show_files(self):
         if not self.files:
             print('Directory is empty')
         else:
             print("Your files:", *self.files)
+        self.basic_method()
 
-    @classmethod
-    def create_file(cls, filename):
-        for file in cls.files:
+    def create_file(self, filename):
+        for file in self.files:
             if file == filename:
                 print("The file already exists")
-                return
-        cls.files.append(filename)
+                self.basic_method()
+        self.files.append(filename)
+        self.basic_method()
 
-    @classmethod
-    def remove_file(cls, filename):
-        for file in cls.files:
+    def remove_file(self, filename):
+        for file in self.files:
             if file == filename:
-                cls.files.remove(filename)
-                return
+                self.files.remove(filename)
+                self.basic_method()
         print("This file doesn't exist")
+        self.basic_method()
 
-    @classmethod
-    def rename_file(cls, filename, new_filename):
-        for ind, file in enumerate(cls.files):
+    def rename_file(self, filename, new_filename):
+        for ind, file in enumerate(self.files):
             if file == filename:
-                cls.files[ind] = new_filename
-                return
+                self.files[ind] = new_filename
+                self.basic_method()
         print("This file doesn't exist")
+        self.basic_method()
 
 os = Pyndows()
-FileSystem.create_file('file')
+
 
 
 
