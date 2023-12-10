@@ -1,3 +1,6 @@
+import time
+
+
 class Pyndows:
     def __init__(self):
         print(
@@ -15,6 +18,8 @@ What do you want to do?
         match (num):
             case '1':
                 MyFiles = FileSystem()
+            case '2':
+                Time = Clock()
             case _:
                 print("Incorrect input")
                 self.choose_func()
@@ -30,6 +35,9 @@ class FileSystem:
 
     def basic_method(self):
         choice = input().split()
+        if not choice:
+            print("Incorrect input ")
+            self.basic_method()
         match(choice[0]):
             case 'help':
                 self.help_files()
@@ -41,6 +49,8 @@ class FileSystem:
                 self.rename_file(choice[1])
             case 'show':
                 self.show_files()
+            case 'exit':
+                self.exit()
             case _:
                 print("Incorrect input ")
                 self.basic_method()
@@ -50,14 +60,17 @@ class FileSystem:
 '''1.To create a file, enter "create <filename>"
 2.To remove a file, enter "remove <filename>"
 3.To rename a file, enter "rename <filename>"
-4.To show a list of files, enter "show files"''')
+4.To show a list of files, enter "show files"
+5.To exit from File Sistem, enter "exit"''')
         self.basic_method()
 
     def show_files(self):
         if not self.files:
             print('Directory is empty')
         else:
-            print("Your files:", *self.files)
+            print("Your files:", end=' ')
+            for file in self.files:
+                print(file, ';', end=' ')
         self.basic_method()
 
     def create_file(self, filename):
@@ -83,6 +96,56 @@ class FileSystem:
                 self.basic_method()
         print("This file doesn't exist")
         self.basic_method()
+
+    def exit(self):
+        os = Pyndows()
+        os.choose_func(self)
+
+class Clock:
+    def __init__(self):
+        print("Clock interface")
+        print('Enter "help" for more information')
+        self.basic_method()
+
+    def basic_method(self):
+        choice = input().split()
+        if not choice:
+            print("Incorrect input ")
+            self.basic_method()
+        match (choice[0]):
+            case 'help':
+                self.help_files()
+            case 'time':
+                self.show_time()
+            case 'date':
+                self.show_date()
+            case 'exit':
+                self.exit()
+            case _:
+                print("Incorrect input ")
+                self.basic_method()
+
+    def help_files(self):
+        print(
+'''1.To see the time, enter "time"
+2.To see the date, enter "date"
+3.To exit from Clock interface, enter "exit"''')
+        self.basic_method()
+
+    def show_time(self):
+        your_time = time.localtime()
+        print(f'{your_time.tm_hour}:{your_time.tm_min}:{your_time.tm_sec}')
+        self.basic_method()
+
+    def show_date(self):
+        your_date = time.localtime()
+        print(f'{your_date.tm_mday}/{your_date.tm_mon}/{your_date.tm_year}')
+        self.basic_method()
+
+    def exit(self):
+        os = Pyndows()
+        os.choose_func(self)
+
 
 os = Pyndows()
 
