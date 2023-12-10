@@ -1,5 +1,6 @@
 import time
-
+import pprint
+import colorama
 
 class Pyndows:
     def __init__(self):
@@ -60,7 +61,7 @@ class FileSystem:
 '''1.To create a file, enter "create <filename>"
 2.To remove a file, enter "remove <filename>"
 3.To rename a file, enter "rename <filename>"
-4.To show a list of files, enter "show files"
+4.To show a list of files, enter "show"
 5.To exit from File Sistem, enter "exit"''')
         self.basic_method()
 
@@ -69,8 +70,7 @@ class FileSystem:
             print('Directory is empty')
         else:
             print("Your files:", end=' ')
-            for file in self.files:
-                print(file, ';', end=' ')
+            print('; '.join(self.files))
         self.basic_method()
 
     def create_file(self, filename):
