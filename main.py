@@ -1,6 +1,8 @@
 import time
-import pprint
-import colorama
+import rich
+from rich import print
+from rich.console import Console
+console = Console()
 
 class Pyndows:
     def __init__(self):
@@ -22,7 +24,7 @@ What do you want to do?
             case '2':
                 Time = Clock()
             case _:
-                print("Incorrect input")
+                console.print("[italic red]Incorrect input[/italic red]")
                 self.choose_func()
 
 
