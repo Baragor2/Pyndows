@@ -1,6 +1,5 @@
 import time
-import rich
-from rich import print
+import pickle
 from rich.console import Console
 console = Console()
 
@@ -30,6 +29,11 @@ What do you want to do?
 
 class FileSystem:
     files = []
+    try:
+        with open("files.bin", "rb") as file:
+            files = pickle.load(file)
+    except:
+        print("File error")
 
     def __init__(self):
         print("FileSystem")
@@ -37,10 +41,15 @@ class FileSystem:
         self.basic_method()
 
     def basic_method(self):
-        choice = input().split()
+        choice = input().strip()
         if not choice:
-            print("Incorrect input ")
+            console.print("[italic red]Incorrect input[/italic red]")
             self.basic_method()
+        choice = choice.split()
+        if len(choice) < 2 and choice[0] in ['create', 'remove', 'rename']:
+            console.print("[italic red]Incorrect input[/italic red]")
+            self.basic_method()
+
         match(choice[0]):
             case 'help':
                 self.help_files()
@@ -55,7 +64,7 @@ class FileSystem:
             case 'exit':
                 self.exit()
             case _:
-                print("Incorrect input ")
+                console.print("[italic red]Incorrect input[/italic red]")
                 self.basic_method()
 
     def help_files(self):
@@ -100,6 +109,11 @@ class FileSystem:
         self.basic_method()
 
     def exit(self):
+        try:
+            with open("files.bin", "wb") as file:
+                pickle.dump(self.files, file)
+        except:
+            print("File error")
         os = Pyndows()
         os.choose_func(self)
 
@@ -112,7 +126,7 @@ class Clock:
     def basic_method(self):
         choice = input().split()
         if not choice:
-            print("Incorrect input ")
+            console.print("[italic red]Incorrect input[/italic red]")
             self.basic_method()
         match (choice[0]):
             case 'help':
@@ -124,7 +138,7 @@ class Clock:
             case 'exit':
                 self.exit()
             case _:
-                print("Incorrect input ")
+                console.print("[italic red]Incorrect input[/italic red]")
                 self.basic_method()
 
     def help_files(self):
