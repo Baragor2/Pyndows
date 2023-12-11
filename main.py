@@ -22,6 +22,8 @@ What do you want to do?
                 MyFiles = FileSystem()
             case '2':
                 Time = Clock()
+            case '4':
+                Mem = Memory()
             case _:
                 console.print("[italic red]Incorrect input[/italic red]")
                 self.choose_func()
@@ -124,13 +126,13 @@ class Clock:
         self.basic_method()
 
     def basic_method(self):
-        choice = input().split()
+        choice = input()
         if not choice:
             console.print("[italic red]Incorrect input[/italic red]")
             self.basic_method()
-        match (choice[0]):
+        match (choice):
             case 'help':
-                self.help_files()
+                self.help_clock()
             case 'time':
                 self.show_time()
             case 'date':
@@ -141,7 +143,7 @@ class Clock:
                 console.print("[italic red]Incorrect input[/italic red]")
                 self.basic_method()
 
-    def help_files(self):
+    def help_clock(self):
         print(
 '''1.To see the time, enter "time"
 2.To see the date, enter "date"
@@ -156,6 +158,54 @@ class Clock:
     def show_date(self):
         your_date = time.localtime()
         print(f'{your_date.tm_mday}/{your_date.tm_mon}/{your_date.tm_year}')
+        self.basic_method()
+
+    def exit(self):
+        os = Pyndows()
+        os.choose_func(self)
+
+class Memory:
+    def __init__(self):
+        print("Memory interface")
+        print('Enter "help" for more information')
+        self.basic_method()
+
+    def basic_method(self):
+        choice = input()
+        if not choice:
+            console.print("[italic red]Incorrect input[/italic red]")
+            self.basic_method()
+        match (choice):
+            case 'help':
+                self.help_memory()
+            case 'total':
+                self.show_total()
+            case 'remaining':
+                self.show_remaining()
+            case 'exit':
+                self.exit()
+            case _:
+                console.print("[italic red]Incorrect input[/italic red]")
+                self.basic_method()
+
+    def help_memory(self):
+        print(
+'''1.To see total memory, enter "total"
+2.To see remaining memory, enter "remaining"
+3.To exit from Memory interface, enter "exit"''')
+        self.basic_method()
+
+    def show_total(self):
+        print('Total memory: 500mb')
+        self.basic_method()
+
+    def show_remaining(self):
+        try:
+            with open("files.bin", "rb") as file:
+                files = pickle.load(file)
+        except:
+            print("File error")
+        print(f"Remaining memory: {500 - len(files)}mb")
         self.basic_method()
 
     def exit(self):
