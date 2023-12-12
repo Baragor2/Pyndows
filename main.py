@@ -63,6 +63,16 @@ class FileSystem:
                 self.rename_file(choice[1])
             case 'show':
                 self.show_files()
+            case 'clear':
+                print("Are you sure? - Yes/No")
+                answer = input()
+                if answer == 'Yes':
+                    self.clear_files()
+                elif answer == 'No':
+                    self.basic_method()
+                else:
+                    console.print("[italic red]Incorrect input[/italic red]")
+                    self.basic_method()
             case 'exit':
                 self.exit()
             case _:
@@ -75,7 +85,8 @@ class FileSystem:
 2.To remove a file, enter "remove <filename>"
 3.To rename a file, enter "rename <filename>"
 4.To show a list of files, enter "show"
-5.To exit from File Sistem, enter "exit"''')
+5.To clear all files, enter "clear"
+6.To exit from File Sistem, enter "exit"''')
         self.basic_method()
 
     def show_files(self):
@@ -109,6 +120,9 @@ class FileSystem:
                 self.basic_method()
         print("This file doesn't exist")
         self.basic_method()
+
+    def clear_files(self):
+        pass
 
     def exit(self):
         try:
