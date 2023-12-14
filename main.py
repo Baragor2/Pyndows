@@ -122,14 +122,19 @@ class FileSystem:
         self.basic_method()
 
     def clear_files(self):
-        pass
+        try:
+            with open("files.bin", "wb") as file:
+                pickle.dump([], file)
+        except:
+            print("[italic red]File error[/italic red]")
+        self.basic_method()
 
     def exit(self):
         try:
             with open("files.bin", "wb") as file:
                 pickle.dump(self.files, file)
         except:
-            print("File error")
+            print("[italic red]File error[/italic red]")
         os = Pyndows()
         os.choose_func(self)
 
@@ -218,7 +223,7 @@ class Memory:
             with open("files.bin", "rb") as file:
                 files = pickle.load(file)
         except:
-            print("File error")
+            print("[italic red]File error[/italic red]")
         print(f"Remaining memory: {500 - len(files)}mb")
         self.basic_method()
 
