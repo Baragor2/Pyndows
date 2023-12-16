@@ -122,11 +122,7 @@ class FileSystem:
         self.basic_method()
 
     def clear_files(self):
-        try:
-            with open("files.bin", "wb") as file:
-                pickle.dump([], file)
-        except:
-            print("[italic red]File error[/italic red]")
+        self.files = []
         self.basic_method()
 
     def exit(self):
