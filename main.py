@@ -1,12 +1,14 @@
 import time
 import pickle
 from rich.console import Console
+
 console = Console()
+
 
 class Pyndows:
     def __init__(self):
         print(
-'''Hello, Pyndows user!
+            '''Hello, Pyndows user!
 What do you want to do?
 1. File system
 2. CLock
@@ -17,13 +19,13 @@ What do you want to do?
     def choose_func(self):
         num = input()
 
-        match (num):
+        match num:
             case '1':
-                MyFiles = FileSystem()
+                FileSystem()
             case '2':
-                Time = Clock()
+                Clock()
             case '4':
-                Mem = Memory()
+                Memory()
             case _:
                 console.print("[italic red]Incorrect input[/italic red]")
                 self.choose_func()
@@ -34,7 +36,7 @@ class FileSystem:
     try:
         with open("files.bin", "rb") as file:
             files = pickle.load(file)
-    except:
+    except FileNotFoundError:
         print("File error")
 
     def __init__(self):
@@ -48,11 +50,13 @@ class FileSystem:
             console.print("[italic red]Incorrect input[/italic red]")
             self.basic_method()
         choice = choice.split()
-        if len(choice) < 2 and choice[0] in ['create', 'remove', 'rename']:
+        if len(choice) < 2 and choice[0] in ['create', 'remove']:
+            console.print("[italic red]Incorrect input[/italic red]")
+        if len(choice) < 3 and choice[0] in ['rename']:
             console.print("[italic red]Incorrect input[/italic red]")
             self.basic_method()
 
-        match(choice[0]):
+        match (choice[0]):
             case 'help':
                 self.help_files()
             case 'create':
@@ -60,7 +64,7 @@ class FileSystem:
             case 'remove':
                 self.remove_file(choice[1])
             case 'rename':
-                self.rename_file(choice[1])
+                self.rename_file(choice[1], choice[2])
             case 'show':
                 self.show_files()
             case 'clear':
@@ -81,12 +85,12 @@ class FileSystem:
 
     def help_files(self):
         print(
-'''1.To create a file, enter "create <filename>"
+            '''1.To create a file, enter "create <filename>"
 2.To remove a file, enter "remove <filename>"
-3.To rename a file, enter "rename <filename>"
+3.To rename a file, enter "rename <filename> <new filename>"
 4.To show a list of files, enter "show"
 5.To clear all files, enter "clear"
-6.To exit from File Sistem, enter "exit"''')
+6.To exit from File System, enter "exit"''')
         self.basic_method()
 
     def show_files(self):
@@ -129,10 +133,11 @@ class FileSystem:
         try:
             with open("files.bin", "wb") as file:
                 pickle.dump(self.files, file)
-        except:
+        except FileNotFoundError:
             print("[italic red]File error[/italic red]")
-        os = Pyndows()
-        os.choose_func(self)
+        menu = Pyndows()
+        menu.choose_func()
+
 
 class Clock:
     def __init__(self):
@@ -145,7 +150,7 @@ class Clock:
         if not choice:
             console.print("[italic red]Incorrect input[/italic red]")
             self.basic_method()
-        match (choice):
+        match choice:
             case 'help':
                 self.help_clock()
             case 'time':
@@ -160,7 +165,7 @@ class Clock:
 
     def help_clock(self):
         print(
-'''1.To see the time, enter "time"
+            '''1.To see the time, enter "time"
 2.To see the date, enter "date"
 3.To exit from Clock interface, enter "exit"''')
         self.basic_method()
@@ -175,9 +180,11 @@ class Clock:
         print(f'{your_date.tm_mday}/{your_date.tm_mon}/{your_date.tm_year}')
         self.basic_method()
 
-    def exit(self):
-        os = Pyndows()
-        os.choose_func(self)
+    @staticmethod
+    def exit():
+        menu = Pyndows()
+        menu.choose_func()
+
 
 class Memory:
     def __init__(self):
@@ -190,7 +197,7 @@ class Memory:
         if not choice:
             console.print("[italic red]Incorrect input[/italic red]")
             self.basic_method()
-        match (choice):
+        match choice:
             case 'help':
                 self.help_memory()
             case 'total':
@@ -205,7 +212,7 @@ class Memory:
 
     def help_memory(self):
         print(
-'''1.To see total memory, enter "total"
+            '''1.To see total memory, enter "total"
 2.To see remaining memory, enter "remaining"
 3.To exit from Memory interface, enter "exit"''')
         self.basic_method()
@@ -218,18 +225,15 @@ class Memory:
         try:
             with open("files.bin", "rb") as file:
                 files = pickle.load(file)
-        except:
+        except FileNotFoundError:
             print("[italic red]File error[/italic red]")
         print(f"Remaining memory: {500 - len(files)}mb")
         self.basic_method()
 
-    def exit(self):
-        os = Pyndows()
-        os.choose_func(self)
+    @staticmethod
+    def exit():
+        menu = Pyndows()
+        menu.choose_func()
 
 
 os = Pyndows()
-
-
-
-
