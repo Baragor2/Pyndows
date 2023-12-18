@@ -102,9 +102,13 @@ class FileSystem:
         self.basic_method()
 
     def create_file(self, filename):
+        ban_chars = {"/", "\\", "|", ":", "*", "?", '"', "<", ">", ";"}
         for file in self.files:
             if file == filename:
-                print("The file already exists")
+                print("[italic red]The file already exists[/italic red]")
+                self.basic_method()
+            if len(set(filename) & ban_chars) > 0:
+                console.print("[italic red]Forbidden characters in the title[/italic red]")
                 self.basic_method()
         self.files.append(filename)
         self.basic_method()
@@ -114,7 +118,7 @@ class FileSystem:
             if file == filename:
                 self.files.remove(filename)
                 self.basic_method()
-        print("This file doesn't exist")
+        print("[italic red]This file doesn't exist[/italic red]")
         self.basic_method()
 
     def rename_file(self, filename, new_filename):
@@ -122,7 +126,7 @@ class FileSystem:
             if file == filename:
                 self.files[ind] = new_filename
                 self.basic_method()
-        print("This file doesn't exist")
+        print("[italic red]This file doesn't exist[/italic red]")
         self.basic_method()
 
     def clear_files(self):
