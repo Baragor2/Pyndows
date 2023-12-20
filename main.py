@@ -105,7 +105,7 @@ class FileSystem:
         ban_chars = {"/", "\\", "|", ":", "*", "?", '"', "<", ">", ";"}
         for file in self.files:
             if file == filename:
-                print("[italic red]The file already exists[/italic red]")
+                console.print("[italic red]The file already exists[/italic red]")
                 self.basic_method()
             if len(set(filename) & ban_chars) > 0:
                 console.print("[italic red]Forbidden characters in the title[/italic red]")
@@ -118,7 +118,7 @@ class FileSystem:
             if file == filename:
                 self.files.remove(filename)
                 self.basic_method()
-        print("[italic red]This file doesn't exist[/italic red]")
+        console.print("[italic red]This file doesn't exist[/italic red]")
         self.basic_method()
 
     def rename_file(self, filename, new_filename):
@@ -126,7 +126,7 @@ class FileSystem:
             if file == filename:
                 self.files[ind] = new_filename
                 self.basic_method()
-        print("[italic red]This file doesn't exist[/italic red]")
+        console.print("[italic red]This file doesn't exist[/italic red]")
         self.basic_method()
 
     def clear_files(self):
@@ -138,7 +138,7 @@ class FileSystem:
             with open("files.bin", "wb") as file:
                 pickle.dump(self.files, file)
         except FileNotFoundError:
-            print("[italic red]File error[/italic red]")
+            console.print("[italic red]File error[/italic red]")
         menu = Pyndows()
         menu.choose_func()
 
@@ -230,7 +230,7 @@ class Memory:
             with open("files.bin", "rb") as file:
                 files = pickle.load(file)
         except FileNotFoundError:
-            print("[italic red]File error[/italic red]")
+            console.print("[italic red]File error[/italic red]")
         print(f"Remaining memory: {500 - len(files)}mb")
         self.basic_method()
 
