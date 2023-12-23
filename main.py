@@ -240,4 +240,33 @@ class Memory:
         menu.choose_func()
 
 
+class Calculator:
+    def __init__(self):
+        print("Calculator interface")
+        print('Enter "help" for more information')
+        self.basic_method()
+
+    def basic_method(self):
+        choice = input()
+        if not choice:
+            console.print("[italic red]Incorrect input[/italic red]")
+            self.basic_method()
+        match choice:
+            case 'help':
+                self.help_memory()
+            case 'exit':
+                self.exit()
+            case _:
+                console.print("[italic red]Incorrect input[/italic red]")
+                self.basic_method()
+
+    def help_memory(self):
+        print(
+            '''1.To add numbers, enter "num + num"
+2.To subtract numbers, enter "num - num"
+3.To multiply numbers, enter "num * num"
+4.To divide numbers, enter "num / num"''')
+        self.basic_method()
+
+
 os = Pyndows()
